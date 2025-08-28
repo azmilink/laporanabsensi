@@ -128,7 +128,7 @@
                     </select>
                 </div>
 
-                <!-- 3. Lupa Absensi -->
+                <!-- Lupa Absensi -->
                 <div id="lupaAbsenSection" class="conditional-section space-y-4">
                     <div>
                         <label for="tanggalLupaAbsen" class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
@@ -140,7 +140,7 @@
                     </div>
                 </div>
                 
-                <!-- 4. Kendala Mesin Absensi -->
+                <!-- Kendala Mesin Absensi -->
                 <div id="kendalaMesinSection" class="conditional-section space-y-4">
                     <div>
                         <label for="deskripsiKendala" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi Kendala</label>
@@ -156,7 +156,7 @@
                     </div>
                 </div>
 
-                <!-- 5 & 6. WFA -->
+                <!-- WFA -->
                 <div id="wfaSection" class="conditional-section space-y-4">
                     <div>
                         <label for="wfaPilihan" class="block text-sm font-medium text-gray-700 mb-1">Pilihan Absensi WFA</label>
@@ -184,7 +184,7 @@
                     </div>
                 </div>
 
-                <!-- 7. Dinas Luar -->
+                <!-- Dinas Luar -->
                 <div id="dinasLuarSection" class="conditional-section space-y-4">
                     <div>
                         <label for="kotaTujuan" class="block text-sm font-medium text-gray-700 mb-1">Kota Tujuan</label>
@@ -200,22 +200,30 @@
                             <input type="date" id="tanggalPulang" name="tanggalPulang" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
                         </div>
                     </div>
+                    <div id="jumlahHariDinas" class="text-sm font-medium text-gray-700 bg-gray-100 p-3 rounded-lg text-center">Jumlah Hari: 0</div>
                     <div>
                         <label for="dokumenDinas" class="block text-sm font-medium text-gray-700 mb-1">Upload Surat Tugas</label>
                         <input type="file" id="dokumenDinas" name="dokumen" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100">
                     </div>
                 </div>
 
-                <!-- 8. Izin -->
+                <!-- Izin -->
                 <div id="izinSection" class="conditional-section space-y-4">
                      <div>
                         <label for="perihalIzin" class="block text-sm font-medium text-gray-700 mb-1">Perihal</label>
                         <textarea id="perihalIzin" name="perihalIzin" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500" placeholder="Contoh: Izin sakit, urusan keluarga, dll."></textarea>
                     </div>
-                    <div>
-                        <label for="tanggalIzin" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Izin</label>
-                        <input type="date" id="tanggalIzin" name="tanggal" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="tanggalMulaiIzin" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai Izin</label>
+                            <input type="date" id="tanggalMulaiIzin" name="tanggal" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label for="tanggalAkhirIzin" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Akhir Izin</label>
+                            <input type="date" id="tanggalAkhirIzin" name="tanggalAkhirIzin" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                        </div>
                     </div>
+                     <div id="jumlahHariIzin" class="text-sm font-medium text-gray-700 bg-gray-100 p-3 rounded-lg text-center">Jumlah Hari: 0</div>
                     <div>
                         <label for="dokumenIzin" class="block text-sm font-medium text-gray-700 mb-1">Upload Surat Izin/Dokter</label>
                         <input type="file" id="dokumenIzin" name="dokumen" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100">
@@ -277,12 +285,21 @@
             const successModal = document.getElementById('successModal');
             const modalMessage = document.getElementById('modalMessage');
             const closeModalButton = document.getElementById('closeModal');
+            
+            // Elemen untuk perhitungan hari
+            const tglPergi = document.getElementById('tanggalPergi');
+            const tglPulang = document.getElementById('tanggalPulang');
+            const jumlahHariDinas = document.getElementById('jumlahHariDinas');
+            const tglMulaiIzin = document.getElementById('tanggalMulaiIzin');
+            const tglAkhirIzin = document.getElementById('tanggalAkhirIzin');
+            const jumlahHariIzin = document.getElementById('jumlahHariIzin');
+
 
             // --- Fungsi untuk membatasi tanggal (tidak bisa memilih tanggal mundur) ---
             function setMinDateForInputs() {
                 const today = new Date();
                 const yyyy = today.getFullYear();
-                const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
                 const dd = String(today.getDate()).padStart(2, '0');
                 const todayString = `${yyyy}-${mm}-${dd}`;
                 
@@ -290,8 +307,31 @@
                     input.setAttribute('min', todayString);
                 });
             }
-            // Panggil fungsi ini sekali saat halaman dimuat untuk mengatur default
             setMinDateForInputs();
+
+            // --- Fungsi untuk menghitung jumlah hari ---
+            function calculateDays(start, end) {
+                const startDate = new Date(start);
+                const endDate = new Date(end);
+                if (!start || !end || startDate > endDate) {
+                    return 0;
+                }
+                const diffTime = Math.abs(endDate - startDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // Termasuk hari awal
+                return diffDays;
+            }
+
+            // --- Event listener untuk perhitungan hari ---
+            [tglPergi, tglPulang].forEach(el => el.addEventListener('change', () => {
+                const days = calculateDays(tglPergi.value, tglPulang.value);
+                jumlahHariDinas.textContent = `Jumlah Hari: ${days}`;
+            }));
+
+            [tglMulaiIzin, tglAkhirIzin].forEach(el => el.addEventListener('change', () => {
+                const days = calculateDays(tglMulaiIzin.value, tglAkhirIzin.value);
+                jumlahHariIzin.textContent = `Jumlah Hari: ${days}`;
+            }));
+
 
             // --- Fungsi utilitas ---
             function hideAllSections() {
@@ -305,38 +345,27 @@
             // --- Event Listener untuk Dropdown Utama ---
             presensiSelect.addEventListener('change', function () {
                 hideAllSections();
-                
-                // PENTING: Reset semua input tanggal agar terkunci kembali setiap kali ada perubahan
                 setMinDateForInputs();
-                
                 const selectedValue = this.value;
 
                 switch (selectedValue) {
                     case 'lupa-absensi':
                         sections.lupaAbsen.classList.add('visible');
-                        // Buka kunci untuk Lupa Absensi
                         document.getElementById('tanggalLupaAbsen').removeAttribute('min');
                         break;
                     case 'kendala-mesin':
                         sections.kendalaMesin.classList.add('visible');
-                        // Kunci tanggal tetap berlaku (dari setMinDateForInputs)
                         break;
                     case 'izin':
                         sections.izin.classList.add('visible');
-                        // Buka kunci untuk Izin
-                        document.getElementById('tanggalIzin').removeAttribute('min');
                         break;
                     case 'wfa':
                         sections.wfa.classList.add('visible');
                         wfaPilihanSelect.value = '';
                         hideWfaSubSections();
-                        // Kunci tanggal tetap berlaku (dari setMinDateForInputs)
                         break;
                     case 'dinas-luar':
                         sections.dinasLuar.classList.add('visible');
-                        // Buka kunci untuk Dinas Luar
-                        document.getElementById('tanggalPergi').removeAttribute('min');
-                        document.getElementById('tanggalPulang').removeAttribute('min');
                         break;
                 }
             });
@@ -406,7 +435,9 @@
                         break;
                     case 'izin':
                         data.perihalIzin = document.getElementById('perihalIzin').value;
-                        data.tanggal = document.getElementById('tanggalIzin').value;
+                        data.tanggal = document.getElementById('tanggalMulaiIzin').value;
+                        data.tanggalAkhirIzin = document.getElementById('tanggalAkhirIzin').value;
+                        data.jumlahHari = calculateDays(data.tanggal, data.tanggalAkhirIzin);
                         break;
                     case 'wfa':
                         data.wfaPilihan = wfaPilihanSelect.value;
@@ -422,6 +453,7 @@
                         data.kotaTujuan = document.getElementById('kotaTujuan').value;
                         data.tanggalPergi = document.getElementById('tanggalPergi').value;
                         data.tanggalPulang = document.getElementById('tanggalPulang').value;
+                        data.jumlahHari = calculateDays(data.tanggalPergi, data.tanggalPulang);
                         break;
                 }
 
@@ -445,6 +477,8 @@
                     form.reset();
                     hideAllSections();
                     hideWfaSubSections();
+                    jumlahHariDinas.textContent = 'Jumlah Hari: 0';
+                    jumlahHariIzin.textContent = 'Jumlah Hari: 0';
                     resetButton();
                 })
                 .catch(error => {
