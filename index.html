@@ -35,6 +35,23 @@
         input[type="date"]:focus::-webkit-datetime-edit {
             color: black !important;
         }
+        
+        /* CSS for Animated Checkmark */
+        .animated-checkmark-icon path {
+            stroke: #4CAF50; /* Green color for success */
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw-checkmark 0.7s ease-out forwards;
+        }
+
+        @keyframes draw-checkmark {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100 antialiased">
@@ -278,7 +295,7 @@
     <div id="notificationModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="mt-3 text-center">
-                <div id="modal-icon" class="mx-auto flex items-center justify-center h-16 w-16 mb-2">
+                <div id="modal-icon" class="mx-auto flex items-center justify-center h-20 w-20 mb-2">
                     <!-- Icon will be inserted by JavaScript -->
                 </div>
                 <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900 mt-2">Berhasil!</h3>
@@ -349,9 +366,9 @@
             document.getElementById('modal-message').innerHTML = message; // Use innerHTML to parse strong tag
             const iconContainer = document.getElementById('modal-icon');
             if (isSuccess) {
-                iconContainer.className = 'mx-auto flex items-center justify-center h-16 w-16 mb-2';
-                // Menggunakan Base64 untuk memastikan logo selalu tampil
-                iconContainer.innerHTML = `<img src="data:image/png;base64,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" alt="Logo Bawaslu" class="h-full w-full object-contain">`;
+                iconContainer.className = 'mx-auto flex items-center justify-center h-20 w-20 mb-2';
+                // PERBAIKAN: Menggunakan SVG animasi ceklis yang ringan dan pasti tampil.
+                iconContainer.innerHTML = `<svg class="animated-checkmark-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none"><path d="M25 50 L45 70 L75 30"/></svg>`;
             } else {
                 iconContainer.className = 'mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-2';
                 iconContainer.innerHTML = `<svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
