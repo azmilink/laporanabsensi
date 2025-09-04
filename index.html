@@ -3,55 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Absensi Pegawai - Bawaslu Riau</title>
-    
-    <!-- Tailwind CSS -->
+    <title>Aplikasi Laporan Absensi Pegawai Bawaslu Riau</title>
+    <!-- Tailwind CSS for modern styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts for a clean look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .conditional-section {
-            transition: all 0.3s ease-in-out;
-            overflow: hidden;
-            max-height: 0;
-            opacity: 0;
+        body {
+            font-family: 'Inter', sans-serif;
         }
-        .conditional-section.visible {
-            max-height: 1000px;
-            opacity: 1;
-            margin-top: 1.5rem;
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
         }
-        .modal-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        ::-webkit-scrollbar-thumb {
+            background: #f97316;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ea580c;
+        }
+        /* Style for date input placeholder */
+        input[type="date"]:required:invalid::-webkit-datetime-edit {
+            color: transparent;
+        }
+        input[type="date"]:focus::-webkit-datetime-edit {
+            color: black !important;
+        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 antialiased">
 
-    <!-- Header Aplikasi -->
-    <header class="bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-center">
-                Aplikasi Laporan Absensi Pegawai Bawaslu Riau
-            </h1>
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl sm:text-2xl font-bold tracking-tight">Aplikasi Laporan Absensi Pegawai</h1>
+                <p class="text-sm sm:text-md text-orange-100">Badan Pengawas Pemilihan Umum Provinsi Riau</p>
+            </div>
+            <div id="clock" class="text-lg font-semibold bg-white bg-opacity-20 px-4 py-2 rounded-lg shadow-inner">
+                00:00:00
+            </div>
         </div>
     </header>
 
-    <!-- Konten Utama -->
+    <!-- Main Content -->
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+        <div class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
             <form id="absensiForm" class="space-y-6">
-                <!-- 1. Nama Pegawai (Dropdown) -->
+                <!-- Nama Pegawai Dropdown -->
                 <div>
                     <label for="namaPegawai" class="block text-sm font-medium text-gray-700 mb-1">Nama Pegawai</label>
-                    <select id="namaPegawai" name="namaPegawai" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition duration-150">
+                    <select id="namaPegawai" name="namaPegawai" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 transition duration-150 ease-in-out">
                         <option value="" disabled selected>-- Pilih Nama Pegawai --</option>
                         <option value="ASMIN SAFARI LUBIS">ASMIN SAFARI LUBIS</option>
                         <option value="TARMIZI">TARMIZI</option>
@@ -115,395 +123,462 @@
                     </select>
                 </div>
 
-                <!-- 2. Presensi Absensi -->
+                <!-- Presensi Absensi Dropdown -->
                 <div>
-                    <label for="presensi" class="block text-sm font-medium text-gray-700 mb-1">Jenis Laporan Absensi</label>
-                    <select id="presensi" name="presensi" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition duration-150">
-                        <option value="" disabled selected>-- Pilih Jenis Laporan --</option>
-                        <option value="lupa-absensi">Lupa Absensi</option>
-                        <option value="izin">Izin</option>
-                        <option value="kendala-mesin">Kendala Mesin Absensi</option>
-                        <option value="dinas-luar">Dinas Luar</option>
-                        <option value="wfa">Work From Anywhere (WFA)</option>
+                    <label for="presensiAbsensi" class="block text-sm font-medium text-gray-700 mb-1">Presensi Absensi</label>
+                    <select id="presensiAbsensi" name="presensiAbsensi" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 transition duration-150 ease-in-out">
+                        <option value="" disabled selected>-- Pilih Jenis Presensi --</option>
+                        <option value="terlambat_pulang_awal">Hadir Terlambat/Pulang Lebih Awal</option>
+                        <option value="izin">Izin Tidak Hadir</option>
+                        <option value="kendala_mesin">Kendala Mesin Absensi</option>
+                        <option value="dinas_luar">Dinas Luar</option>
+                        <option value="wfa">WFA (Work From Anywhere)</option>
                     </select>
                 </div>
 
-                <!-- Lupa Absensi -->
-                <div id="lupaAbsenSection" class="conditional-section space-y-4">
-                    <div>
-                        <label for="tanggalLupaAbsen" class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                        <input type="date" id="tanggalLupaAbsen" name="tanggal" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                <!-- Dynamic Fields Container -->
+                <div id="dynamic-fields" class="space-y-6">
+                    <!-- Hadir Terlambat / Pulang Lebih Awal -->
+                    <div id="terlambat_pulang_awal-fields" class="hidden p-4 border border-gray-200 rounded-lg space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Keterangan Terlambat / Pulang Awal</h3>
+                        <div>
+                            <label for="terlambat_keterangan" class="block text-sm font-medium text-gray-700 mb-1">Keterangan</label>
+                            <textarea id="terlambat_keterangan" name="terlambat_keterangan" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"></textarea>
+                        </div>
+                        <div>
+                            <label for="terlambat_tanggal" class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
+                            <input type="date" id="terlambat_tanggal" name="terlambat_tanggal" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label for="terlambat_dokumen" class="block text-sm font-medium text-gray-700 mb-1">Upload Dokumen Pendukung (Opsional)</label>
+                            <input type="file" id="terlambat_dokumen" name="terlambat_dokumen" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100">
+                        </div>
                     </div>
-                    <div>
-                        <label for="dokumenLupaAbsen" class="block text-sm font-medium text-gray-700 mb-1">Upload Dokumen Pendukung</label>
-                        <input type="file" id="dokumenLupaAbsen" name="dokumen" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100">
+
+                    <!-- Kendala Mesin Absensi -->
+                    <div id="kendala_mesin-fields" class="hidden p-4 border border-gray-200 rounded-lg space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Laporan Kendala Mesin Absensi</h3>
+                         <div>
+                            <label for="kendala_deskripsi" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi Kendala</label>
+                            <textarea id="kendala_deskripsi" name="kendala_deskripsi" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"></textarea>
+                        </div>
+                        <div>
+                            <label for="kendala_tanggal" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Kendala</label>
+                            <input type="date" id="kendala_tanggal" name="kendala_tanggal" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label for="kendala_dokumen" class="block text-sm font-medium text-gray-700 mb-1">Upload Bukti (Foto/Video)</label>
+                            <input type="file" id="kendala_dokumen" name="kendala_dokumen" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100">
+                        </div>
                     </div>
-                </div>
-                
-                <!-- Kendala Mesin Absensi -->
-                <div id="kendalaMesinSection" class="conditional-section space-y-4">
-                    <div>
-                        <label for="deskripsiKendala" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi Kendala</label>
-                        <textarea id="deskripsiKendala" name="deskripsiKendala" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500" placeholder="Jelaskan kendala yang Anda alami..."></textarea>
+
+                    <!-- WFA -->
+                    <div id="wfa-fields" class="hidden p-4 border border-gray-200 rounded-lg space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Laporan WFA</h3>
+                        <div>
+                             <label for="wfa_jenis" class="block text-sm font-medium text-gray-700 mb-1">Jenis Laporan WFA</label>
+                            <select id="wfa_jenis" name="wfa_jenis" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                                <option value="" disabled selected>-- Pilih Jenis Absensi --</option>
+                                <option value="Masuk">Absensi Masuk</option>
+                                <option value="Pulang">Absensi Pulang</option>
+                            </select>
+                        </div>
+                        <div id="wfa-masuk-fields" class="hidden space-y-4">
+                             <div>
+                                <label for="wfa_rencana_kerja" class="block text-sm font-medium text-gray-700 mb-1">Rencana Kerja Hari Ini</label>
+                                <textarea id="wfa_rencana_kerja" name="wfa_rencana_kerja" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"></textarea>
+                            </div>
+                        </div>
+                         <div id="wfa-pulang-fields" class="hidden space-y-4">
+                             <div>
+                                <label for="wfa_pencapaian_kerja" class="block text-sm font-medium text-gray-700 mb-1">Pencapaian Target Kerja Hari Ini</label>
+                                <textarea id="wfa_pencapaian_kerja" name="wfa_pencapaian_kerja" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"></textarea>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="wfa_tanggal" class="block text-sm font-medium text-gray-700 mb-1">Tanggal WFA</label>
+                            <input type="date" id="wfa_tanggal" name="wfa_tanggal" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                        </div>
                     </div>
-                    <div>
-                        <label for="tanggalKendala" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Kendala</label>
-                        <input type="date" id="tanggalKendala" name="tanggal" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+
+                    <!-- Dinas Luar -->
+                    <div id="dinas_luar-fields" class="hidden p-4 border border-gray-200 rounded-lg space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Laporan Dinas Luar</h3>
+                        <div>
+                            <label for="dinas_kota_tujuan" class="block text-sm font-medium text-gray-700 mb-1">Kota Tujuan</label>
+                            <input type="text" id="dinas_kota_tujuan" name="dinas_kota_tujuan" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="dinas_tanggal_pergi" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Pergi</label>
+                                <input type="date" id="dinas_tanggal_pergi" name="dinas_tanggal_pergi" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                            <div>
+                                <label for="dinas_tanggal_pulang" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Pulang</label>
+                                <input type="date" id="dinas_tanggal_pulang" name="dinas_tanggal_pulang" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                        </div>
+                        <div>
+                             <label for="dinas_jumlah_hari" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Hari</label>
+                            <input type="text" id="dinas_jumlah_hari" name="dinas_jumlah_hari" readonly class="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm">
+                        </div>
+                        <div>
+                            <label for="dinas_dokumen" class="block text-sm font-medium text-gray-700 mb-1">Upload Surat Tugas</label>
+                            <input type="file" id="dinas_dokumen" name="dinas_dokumen" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100">
+                        </div>
                     </div>
-                    <div>
-                        <label for="dokumenKendala" class="block text-sm font-medium text-gray-700 mb-1">Upload Foto/Video Bukti</label>
-                        <input type="file" id="dokumenKendala" name="dokumen" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100">
+                    
+                    <!-- Izin -->
+                     <div id="izin-fields" class="hidden p-4 border border-gray-200 rounded-lg space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Form Izin Tidak Hadir</h3>
+                         <div>
+                            <label for="izin_perihal" class="block text-sm font-medium text-gray-700 mb-1">Perihal Izin</label>
+                            <input type="text" id="izin_perihal" name="izin_perihal" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="izin_tanggal_awal" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Awal Izin</label>
+                                <input type="date" id="izin_tanggal_awal" name="izin_tanggal_awal" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                            <div>
+                                <label for="izin_tanggal_akhir" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Akhir Izin</label>
+                                <input type="date" id="izin_tanggal_akhir" name="izin_tanggal_akhir" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                        </div>
+                        <div>
+                             <label for="izin_jumlah_hari" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Hari</label>
+                            <input type="text" id="izin_jumlah_hari" name="izin_jumlah_hari" readonly class="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm">
+                        </div>
+                        <div>
+                            <label for="izin_dokumen" class="block text-sm font-medium text-gray-700 mb-1">Upload Surat Izin/Dokter</label>
+                            <input type="file" id="izin_dokumen" name="izin_dokumen" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100">
+                        </div>
                     </div>
+
                 </div>
 
-                <!-- WFA -->
-                <div id="wfaSection" class="conditional-section space-y-4">
-                    <div>
-                        <label for="wfaPilihan" class="block text-sm font-medium text-gray-700 mb-1">Pilihan Absensi WFA</label>
-                        <select id="wfaPilihan" name="wfaPilihan" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
-                            <option value="" disabled selected>-- Pilih Absensi --</option>
-                            <option value="absensi-masuk">Absensi Masuk</option>
-                            <option value="absensi-pulang">Absensi Pulang</option>
-                        </select>
-                    </div>
-                    <div id="wfaMasukSection" class="conditional-section space-y-4">
-                        <label for="rencanaKerja" class="block text-sm font-medium text-gray-700 mb-1">Rencana Kerja Hari Ini</label>
-                        <textarea id="rencanaKerja" name="keterangan" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500" placeholder="Jelaskan rencana kerja Anda..."></textarea>
-                        <div>
-                            <label for="tanggalWfaMasuk" class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                            <input type="date" id="tanggalWfaMasuk" name="tanggal" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
-                        </div>
-                    </div>
-                    <div id="wfaPulangSection" class="conditional-section space-y-4">
-                        <label for="pencapaianKerja" class="block text-sm font-medium text-gray-700 mb-1">Pencapaian Target Kerja Hari Ini</label>
-                        <textarea id="pencapaianKerja" name="keterangan" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500" placeholder="Jelaskan pencapaian target Anda..."></textarea>
-                        <div>
-                            <label for="tanggalWfaPulang" class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                            <input type="date" id="tanggalWfaPulang" name="tanggal" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dinas Luar -->
-                <div id="dinasLuarSection" class="conditional-section space-y-4">
-                    <div>
-                        <label for="kotaTujuan" class="block text-sm font-medium text-gray-700 mb-1">Kota Tujuan</label>
-                        <input type="text" id="kotaTujuan" name="kotaTujuan" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500" placeholder="Contoh: Jakarta">
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="tanggalPergi" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Pergi</label>
-                            <input type="date" id="tanggalPergi" name="tanggalPergi" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
-                        </div>
-                        <div>
-                            <label for="tanggalPulang" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Pulang</label>
-                            <input type="date" id="tanggalPulang" name="tanggalPulang" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
-                        </div>
-                    </div>
-                    <div id="jumlahHariDinas" class="text-sm font-medium text-gray-700 bg-gray-100 p-3 rounded-lg text-center">Jumlah Hari: 0</div>
-                    <div>
-                        <label for="dokumenDinas" class="block text-sm font-medium text-gray-700 mb-1">Upload Surat Tugas</label>
-                        <input type="file" id="dokumenDinas" name="dokumen" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100">
-                    </div>
-                </div>
-
-                <!-- Izin -->
-                <div id="izinSection" class="conditional-section space-y-4">
-                     <div>
-                        <label for="perihalIzin" class="block text-sm font-medium text-gray-700 mb-1">Perihal</label>
-                        <textarea id="perihalIzin" name="perihalIzin" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500" placeholder="Contoh: Izin sakit, urusan keluarga, dll."></textarea>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="tanggalMulaiIzin" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai Izin</label>
-                            <input type="date" id="tanggalMulaiIzin" name="tanggal" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
-                        </div>
-                        <div>
-                            <label for="tanggalAkhirIzin" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Akhir Izin</label>
-                            <input type="date" id="tanggalAkhirIzin" name="tanggalAkhirIzin" class="date-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
-                        </div>
-                    </div>
-                     <div id="jumlahHariIzin" class="text-sm font-medium text-gray-700 bg-gray-100 p-3 rounded-lg text-center">Jumlah Hari: 0</div>
-                    <div>
-                        <label for="dokumenIzin" class="block text-sm font-medium text-gray-700 mb-1">Upload Surat Izin/Dokter</label>
-                        <input type="file" id="dokumenIzin" name="dokumen" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100">
-                    </div>
-                </div>
-
-                <!-- Tombol Submit -->
-                <div class="pt-4">
-                    <button type="submit" id="submitButton" class="w-full flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-150 disabled:bg-orange-300">
-                        <span id="buttonText">Submit Laporan</span>
-                        <svg id="loadingSpinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <!-- Submit Button -->
+                <div class="pt-4 border-t">
+                    <button type="submit" id="submitBtn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-transform transform hover:scale-105">
+                        <svg id="submit-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                        <svg id="loading-spinner" class="hidden animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
+                        <span id="submit-text">Kirim Laporan</span>
                     </button>
                 </div>
             </form>
         </div>
     </main>
-
-    <!-- Popup/Modal Sukses -->
-    <div id="successModal" class="fixed inset-0 bg-gray-900 bg-opacity-60 flex items-center justify-center p-4 hidden z-50">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full text-center modal-fade-in">
-            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-                <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
+    
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <div id="modal-icon" class="mx-auto flex items-center justify-center h-16 w-16 mb-2">
+                    <!-- Icon will be inserted by JavaScript -->
+                </div>
+                <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900 mt-2">Berhasil!</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p id="modal-message" class="text-sm text-gray-500"></p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="closeModal" class="px-4 py-2 bg-orange-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-300">
+                        OK
+                    </button>
+                </div>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900">Berhasil!</h3>
-            <p id="modalMessage" class="text-gray-600 mt-2">Laporan absensi Anda sudah diterima.</p>
-            <button id="closeModal" class="mt-6 w-full px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-150">
-                Tutup
-            </button>
         </div>
     </div>
 
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // --- Variabel Elemen ---
-            const form = document.getElementById('absensiForm');
-            const namaPegawaiSelect = document.getElementById('namaPegawai');
-            const presensiSelect = document.getElementById('presensi');
-            const wfaPilihanSelect = document.getElementById('wfaPilihan');
-            
-            const sections = {
-                lupaAbsen: document.getElementById('lupaAbsenSection'),
-                kendalaMesin: document.getElementById('kendalaMesinSection'),
-                izin: document.getElementById('izinSection'),
-                wfa: document.getElementById('wfaSection'),
-                wfaMasuk: document.getElementById('wfaMasukSection'),
-                wfaPulang: document.getElementById('wfaPulangSection'),
-                dinasLuar: document.getElementById('dinasLuarSection')
-            };
+    // --- IMPORTANT SETUP ---
+    // Ganti URL ini dengan URL Web App dari Google Apps Script Anda.
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx5XJha5tiNt8rA_4biwxsc2H-TfTnvvhSg7bXWscaCYEFXsZFzeqRQjrecCvMf09AQNw/exec';
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        // Clock Functionality
+        const clockElement = document.getElementById('clock');
+        setInterval(() => {
+            const now = new Date();
+            clockElement.textContent = now.toLocaleTimeString('id-ID', { hour12: false });
+        }, 1000);
 
-            const submitButton = document.getElementById('submitButton');
-            const buttonText = document.getElementById('buttonText');
-            const loadingSpinner = document.getElementById('loadingSpinner');
+        // Form elements
+        const form = document.getElementById('absensiForm');
+        const presensiSelect = document.getElementById('presensiAbsensi');
+        const dynamicFieldsContainer = document.getElementById('dynamic-fields');
+        const allDynamicFields = dynamicFieldsContainer.querySelectorAll(':scope > div');
 
-            const successModal = document.getElementById('successModal');
-            const modalMessage = document.getElementById('modalMessage');
-            const closeModalButton = document.getElementById('closeModal');
-            
-            // Elemen untuk perhitungan hari
-            const tglPergi = document.getElementById('tanggalPergi');
-            const tglPulang = document.getElementById('tanggalPulang');
-            const jumlahHariDinas = document.getElementById('jumlahHariDinas');
-            const tglMulaiIzin = document.getElementById('tanggalMulaiIzin');
-            const tglAkhirIzin = document.getElementById('tanggalAkhirIzin');
-            const jumlahHariIzin = document.getElementById('jumlahHariIzin');
+        // WFA specific elements
+        const wfaJenisSelect = document.getElementById('wfa_jenis');
+        const wfaMasukFields = document.getElementById('wfa-masuk-fields');
+        const wfaPulangFields = document.getElementById('wfa-pulang-fields');
+
+        // Date calculation elements
+        const dinasPergi = document.getElementById('dinas_tanggal_pergi');
+        const dinasPulang = document.getElementById('dinas_tanggal_pulang');
+        const dinasJumlahHari = document.getElementById('dinas_jumlah_hari');
+        const izinAwal = document.getElementById('izin_tanggal_awal');
+        const izinAkhir = document.getElementById('izin_tanggal_akhir');
+        const izinJumlahHari = document.getElementById('izin_jumlah_hari');
+
+        // Modal elements
+        const modal = document.getElementById('notificationModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        
+        // Submit button elements
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submit-text');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const submitIcon = document.getElementById('submit-icon');
 
 
-            // --- Fungsi untuk membatasi tanggal (tidak bisa memilih tanggal mundur) ---
-            function setMinDateForInputs() {
-                const today = new Date();
-                const yyyy = today.getFullYear();
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const dd = String(today.getDate()).padStart(2, '0');
-                const todayString = `${yyyy}-${mm}-${dd}`;
-                
-                document.querySelectorAll('.date-input').forEach(input => {
-                    input.setAttribute('min', todayString);
-                });
+        // Set minimum date for relevant inputs to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('kendala_tanggal').min = today;
+        document.getElementById('wfa_tanggal').min = today;
+
+
+        function showModal(title, message, isSuccess = true) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').innerHTML = message; // Use innerHTML to parse strong tag
+            const iconContainer = document.getElementById('modal-icon');
+            if (isSuccess) {
+                iconContainer.className = 'mx-auto flex items-center justify-center h-16 w-16 mb-2';
+                iconContainer.innerHTML = `<img src="https://bawaslu.go.id/assets/img/logo.png" alt="Logo Bawaslu" class="h-full w-full object-contain">`;
+            } else {
+                iconContainer.className = 'mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-2';
+                iconContainer.innerHTML = `<svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
             }
-            setMinDateForInputs();
+            modal.style.display = 'block';
+        }
+        
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
 
-            // --- Fungsi untuk menghitung jumlah hari ---
-            function calculateDays(start, end) {
-                const startDate = new Date(start);
-                const endDate = new Date(end);
-                if (!start || !end || startDate > endDate) {
-                    return 0;
-                }
-                const diffTime = Math.abs(endDate - startDate);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // Termasuk hari awal
-                return diffDays;
-            }
-
-            // --- Event listener untuk perhitungan hari ---
-            [tglPergi, tglPulang].forEach(el => el.addEventListener('change', () => {
-                const days = calculateDays(tglPergi.value, tglPulang.value);
-                jumlahHariDinas.textContent = `Jumlah Hari: ${days}`;
-            }));
-
-            [tglMulaiIzin, tglAkhirIzin].forEach(el => el.addEventListener('change', () => {
-                const days = calculateDays(tglMulaiIzin.value, tglAkhirIzin.value);
-                jumlahHariIzin.textContent = `Jumlah Hari: ${days}`;
-            }));
-
-
-            // --- Fungsi utilitas ---
-            function hideAllSections() {
-                Object.values(sections).forEach(section => section.classList.remove('visible'));
-            }
-            function hideWfaSubSections() {
-                sections.wfaMasuk.classList.remove('visible');
-                sections.wfaPulang.classList.remove('visible');
-            }
-
-            // --- Event Listener untuk Dropdown Utama ---
-            presensiSelect.addEventListener('change', function () {
-                hideAllSections();
-                setMinDateForInputs();
-                const selectedValue = this.value;
-
-                switch (selectedValue) {
-                    case 'lupa-absensi':
-                        sections.lupaAbsen.classList.add('visible');
-                        document.getElementById('tanggalLupaAbsen').removeAttribute('min');
-                        break;
-                    case 'kendala-mesin':
-                        sections.kendalaMesin.classList.add('visible');
-                        break;
-                    case 'izin':
-                        sections.izin.classList.add('visible');
-                        break;
-                    case 'wfa':
-                        sections.wfa.classList.add('visible');
-                        wfaPilihanSelect.value = '';
-                        hideWfaSubSections();
-                        break;
-                    case 'dinas-luar':
-                        sections.dinasLuar.classList.add('visible');
-                        break;
-                }
-            });
-
-            // --- Event Listener untuk Dropdown WFA ---
-            wfaPilihanSelect.addEventListener('change', function () {
-                hideWfaSubSections();
-                if (this.value === 'absensi-masuk') {
-                    sections.wfaMasuk.classList.add('visible');
-                } else if (this.value === 'absensi-pulang') {
-                    sections.wfaPulang.classList.add('visible');
-                }
-            });
-
-            // --- Event Listener untuk Submit Form ---
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                
-                submitButton.disabled = true;
-                buttonText.textContent = 'Mengirim...';
-                loadingSpinner.classList.remove('hidden');
-
-                const fileInputs = {
-                    'lupa-absensi': document.getElementById('dokumenLupaAbsen'),
-                    'kendala-mesin': document.getElementById('dokumenKendala'),
-                    'izin': document.getElementById('dokumenIzin'),
-                    'dinas-luar': document.getElementById('dokumenDinas'),
-                };
-                
-                const presensiValue = presensiSelect.value;
-                const fileInput = fileInputs[presensiValue];
-                
-                if (fileInput && fileInput.files[0]) {
-                    const file = fileInput.files[0];
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () => {
-                        const fileData = {
-                            base64: reader.result.split(',')[1],
-                            type: file.type,
-                            name: file.name
-                        };
-                        sendData(fileData);
-                    };
-                    reader.onerror = (error) => {
-                        console.error('Error reading file:', error);
-                        alert('Gagal membaca file.');
-                        resetButton();
-                    };
-                } else {
-                    sendData(null);
-                }
-            });
-
-            function sendData(fileObject) {
-                const data = {};
-                data.namaPegawai = namaPegawaiSelect.value;
-                data.presensi = presensiSelect.value;
-
-                switch (data.presensi) {
-                    case 'lupa-absensi':
-                        data.tanggal = document.getElementById('tanggalLupaAbsen').value;
-                        break;
-                    case 'kendala-mesin':
-                        data.deskripsiKendala = document.getElementById('deskripsiKendala').value;
-                        data.tanggal = document.getElementById('tanggalKendala').value;
-                        break;
-                    case 'izin':
-                        data.perihalIzin = document.getElementById('perihalIzin').value;
-                        data.tanggal = document.getElementById('tanggalMulaiIzin').value;
-                        data.tanggalAkhirIzin = document.getElementById('tanggalAkhirIzin').value;
-                        data.jumlahHari = calculateDays(data.tanggal, data.tanggalAkhirIzin);
-                        break;
-                    case 'wfa':
-                        data.wfaPilihan = wfaPilihanSelect.value;
-                        if (data.wfaPilihan === 'absensi-masuk') {
-                            data.keterangan = document.getElementById('rencanaKerja').value;
-                            data.tanggal = document.getElementById('tanggalWfaMasuk').value;
-                        } else if (data.wfaPilihan === 'absensi-pulang') {
-                            data.keterangan = document.getElementById('pencapaianKerja').value;
-                            data.tanggal = document.getElementById('tanggalWfaPulang').value;
+        // Function to show/hide fields based on selection
+        function toggleDynamicFields() {
+            const selectedValue = presensiSelect.value;
+            allDynamicFields.forEach(field => {
+                if (field.id === `${selectedValue}-fields`) {
+                    field.classList.remove('hidden');
+                    // Add 'required' to inputs within the visible section
+                    field.querySelectorAll('input, select, textarea').forEach(input => {
+                        // Skip optional fields like file uploads
+                        if(input.type !== 'file') {
+                             input.required = true;
                         }
+                    });
+                } else {
+                    field.classList.add('hidden');
+                    // Remove 'required' from inputs in hidden sections
+                    field.querySelectorAll('input, select, textarea').forEach(input => {
+                        input.required = false;
+                    });
+                }
+            });
+            // Reset WFA sub-fields specifically
+            wfaMasukFields.classList.add('hidden');
+            wfaPulangFields.classList.add('hidden');
+            wfaMasukFields.querySelector('textarea').required = false;
+            wfaPulangFields.querySelector('textarea').required = false;
+             // Set file input for 'terlambat' as not required
+            document.getElementById('terlambat_dokumen').required = false;
+        }
+
+        // Event listener for main dropdown
+        presensiSelect.addEventListener('change', toggleDynamicFields);
+        
+        // Event listener for WFA dropdown
+        wfaJenisSelect.addEventListener('change', function() {
+            const selectedWfa = this.value;
+            const rencanaKerja = wfaMasukFields.querySelector('textarea');
+            const pencapaianKerja = wfaPulangFields.querySelector('textarea');
+            
+            wfaMasukFields.classList.add('hidden');
+            rencanaKerja.required = false;
+            wfaPulangFields.classList.add('hidden');
+            pencapaianKerja.required = false;
+
+            if(selectedWfa === 'Masuk') {
+                wfaMasukFields.classList.remove('hidden');
+                rencanaKerja.required = true;
+            } else if (selectedWfa === 'Pulang') {
+                wfaPulangFields.classList.remove('hidden');
+                pencapaianKerja.required = true;
+            }
+        });
+
+        // Date calculation logic
+        function calculateDays(startDate, endDate, resultElement) {
+            const start = new Date(startDate.value);
+            const end = new Date(endDate.value);
+
+            if (startDate.value && endDate.value && end >= start) {
+                const diffTime = Math.abs(end - start);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // Inclusive
+                resultElement.value = `${diffDays} hari`;
+            } else {
+                resultElement.value = '';
+            }
+        }
+        
+        dinasPergi.addEventListener('change', () => calculateDays(dinasPergi, dinasPulang, dinasJumlahHari));
+        dinasPulang.addEventListener('change', () => calculateDays(dinasPergi, dinasPulang, dinasJumlahHari));
+        izinAwal.addEventListener('change', () => calculateDays(izinAwal, izinAkhir, izinJumlahHari));
+        izinAkhir.addEventListener('change', () => calculateDays(izinAwal, izinAkhir, izinJumlahHari));
+
+
+        // Form Submission
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Custom validation check
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                 let parent = field.closest('.p-4'); // Find the parent container
+                 // Only check for validity if the field is inside a visible container
+                 if (parent && !parent.classList.contains('hidden')) {
+                     if (!field.value.trim()) {
+                         isValid = false;
+                     }
+                 } else if (!parent && !field.value.trim()) { // For fields not in a dynamic container (like Nama Pegawai)
+                    isValid = false;
+                 }
+            });
+
+            if (!isValid) {
+                showModal('Gagal', 'Harap lengkapi seluruh formulir yang wajib diisi.', false);
+                return;
+            }
+            
+            if (GOOGLE_SCRIPT_URL === 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' || GOOGLE_SCRIPT_URL === '') {
+                showModal('Kesalahan Konfigurasi', 'URL Google Apps Script belum diatur. Silakan hubungi administrator.', false);
+                return;
+            }
+            
+            // Show loading state
+            submitText.textContent = 'Mengirim...';
+            loadingSpinner.classList.remove('hidden');
+            submitIcon.classList.add('hidden');
+            submitBtn.disabled = true;
+
+            const selectedPresensiValue = presensiSelect.value;
+            const selectedPresensiOption = presensiSelect.options[presensiSelect.selectedIndex];
+            const presensiAbsensiText = selectedPresensiOption ? selectedPresensiOption.text : '';
+            
+            const fileInput = document.querySelector(`#${selectedPresensiValue}-fields input[type="file"]`);
+            const file = fileInput ? fileInput.files[0] : null;
+
+            const reader = new FileReader();
+
+            const submitData = () => {
+                const formData = new FormData(form);
+                const dataObj = {
+                    namaPegawai: formData.get('namaPegawai'),
+                    presensiAbsensiText: presensiAbsensiText,
+                    tanggalKejadian: '',
+                    tanggalMulai: '',
+                    tanggalSelesai: '',
+                    jumlahHari: '',
+                    kotaTujuan: '',
+                    jenisWFA: '',
+                    deskripsi: '',
+                };
+
+                // Kumpulkan data terperinci berdasarkan formulir yang terlihat
+                switch (selectedPresensiValue) {
+                    case 'terlambat_pulang_awal':
+                        dataObj.deskripsi = formData.get('terlambat_keterangan');
+                        dataObj.tanggalKejadian = formData.get('terlambat_tanggal');
+                        dataObj.jumlahHari = '1 hari';
                         break;
-                    case 'dinas-luar':
-                        data.kotaTujuan = document.getElementById('kotaTujuan').value;
-                        data.tanggalPergi = document.getElementById('tanggalPergi').value;
-                        data.tanggalPulang = document.getElementById('tanggalPulang').value;
-                        data.jumlahHari = calculateDays(data.tanggalPergi, data.tanggalPulang);
+                    case 'izin':
+                        dataObj.deskripsi = formData.get('izin_perihal');
+                        dataObj.tanggalMulai = formData.get('izin_tanggal_awal');
+                        dataObj.tanggalSelesai = formData.get('izin_tanggal_akhir');
+                        dataObj.jumlahHari = formData.get('izin_jumlah_hari');
+                        break;
+                    case 'kendala_mesin':
+                        dataObj.deskripsi = formData.get('kendala_deskripsi');
+                        dataObj.tanggalKejadian = formData.get('kendala_tanggal');
+                        dataObj.jumlahHari = '1 hari';
+                        break;
+                    case 'dinas_luar':
+                        dataObj.kotaTujuan = formData.get('dinas_kota_tujuan');
+                        dataObj.tanggalMulai = formData.get('dinas_tanggal_pergi');
+                        dataObj.tanggalSelesai = formData.get('dinas_tanggal_pulang');
+                        dataObj.jumlahHari = formData.get('dinas_jumlah_hari');
+                        dataObj.deskripsi = `Perjalanan Dinas ke ${dataObj.kotaTujuan}`;
+                        break;
+                    case 'wfa':
+                        const wfaJenis = formData.get('wfa_jenis');
+                        dataObj.jenisWFA = wfaJenis;
+                        if (wfaJenis === 'Masuk') {
+                            dataObj.deskripsi = formData.get('wfa_rencana_kerja');
+                        } else if (wfaJenis === 'Pulang') {
+                            dataObj.deskripsi = formData.get('wfa_pencapaian_kerja');
+                        }
+                        dataObj.tanggalKejadian = formData.get('wfa_tanggal');
                         break;
                 }
-
-                if (fileObject) {
-                    data.file = fileObject;
+                
+                if (file) {
+                    const today = new Date();
+                    const dateString = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`;
+                    const fileExtension = file.name.split('.').pop();
+                    dataObj.fileName = `${dataObj.namaPegawai}_${dateString}.${fileExtension}`;
+                    dataObj.fileType = file.type;
+                    dataObj.fileData = reader.result;
                 }
 
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbzoRlWYNTgtiCcOPrecwZtAYGla9RFlYkgcULHamjQ3jbesffuls9nKPE8CWQHB5qM/exec';
-
-                fetch(scriptURL, {
+                fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
+                    mode: 'no-cors', // Penting untuk Web Apps agar tidak ada masalah CORS
                     cache: 'no-cache',
-                    body: JSON.stringify(data)
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dataObj)
                 })
-                .then(response => {
-                    console.log('Success!', response);
-                    const selectedPegawai = namaPegawaiSelect.options[namaPegawaiSelect.selectedIndex].text;
-                    modalMessage.textContent = `Laporan absensi atas nama ${selectedPegawai} sudah diterima.`;
-                    successModal.classList.remove('hidden');
+                .then(res => {
+                    // Dengan no-cors, kita tidak bisa memeriksa respon, jadi kita asumsikan sukses
+                    showModal('Berhasil!', `Laporan absensi atas nama <strong>${dataObj.namaPegawai}</strong> sudah diterima.`);
                     form.reset();
-                    hideAllSections();
-                    hideWfaSubSections();
-                    jumlahHariDinas.textContent = 'Jumlah Hari: 0';
-                    jumlahHariIzin.textContent = 'Jumlah Hari: 0';
-                    resetButton();
+                    toggleDynamicFields();
                 })
                 .catch(error => {
-                    console.error('Error!', error.message);
-                    alert('Terjadi kesalahan saat mengirim laporan. Silakan coba lagi.');
-                    resetButton();
+                    showModal('Gagal', `Terjadi kesalahan saat mengirim data: ${error.message}`, false);
+                })
+                .finally(() => {
+                    // Kembalikan tombol ke keadaan semula
+                    submitText.textContent = 'Kirim Laporan';
+                    loadingSpinner.classList.add('hidden');
+                    submitIcon.classList.remove('hidden');
+                    submitBtn.disabled = false;
                 });
-            }
+            };
 
-            function resetButton() {
-                submitButton.disabled = false;
-                buttonText.textContent = 'Submit Laporan';
-                loadingSpinner.classList.add('hidden');
+            if (file) {
+                reader.onload = submitData;
+                reader.readAsDataURL(file);
+            } else {
+                submitData();
             }
-
-            function hideModal() {
-                successModal.classList.add('hidden');
-            }
-            closeModalButton.addEventListener('click', hideModal);
-            successModal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    hideModal();
-                }
-            });
         });
+        
+        // Inisialisasi tampilan form saat pertama kali dimuat
+        toggleDynamicFields();
+    });
     </script>
+
 </body>
 </html>
+
